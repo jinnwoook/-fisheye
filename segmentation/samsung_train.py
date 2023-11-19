@@ -4,7 +4,8 @@ num_classes = 13
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
     type='EncoderDecoderMask2Former',
-    pretrained='pretrained/beit_large_patch16_224_pt22k_ft22k.pth',
+    pretrained='/content/beit_large_patch16_224_pt22k_ft22k.pth',
+    load_from='/content/drive/My Drive/dacon/model/mask2former_beit_adapter_large_896_80k_cityscapes.pth',
     backbone=dict(
         type='BEiTAdapter',
         patch_size=16,
@@ -145,7 +146,7 @@ model = dict(
         stride=(512, 512)),
     init_cfg=None)
 dataset_type = 'samsung'
-data_root = '../../data_preprocessing/data/13class_dataset'
+data_root = '/content/drive/My Drive/dacon'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (896, 896)
@@ -192,9 +193,9 @@ data = dict(
     workers_per_gpu=2,
     train=dict(
         type='samsung',
-        data_root='../../data_preprocessing/data/13class_dataset',
-        img_dir='train_img',
-        ann_dir='train_img_anno',
+        data_root='/content/drive/My Drive/dacon',
+        img_dir='train_source_image',
+        ann_dir='train_mask_image',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
@@ -217,9 +218,9 @@ data = dict(
         ]),
     val=dict(
         type='samsung',
-        data_root='../../data_preprocessing/data/13class_dataset',
-        img_dir='valid_img',
-        ann_dir='valid_img_anno',
+        data_root='/content/drive/My Drive/dacon',
+        img_dir='val_source_image',
+        ann_dir='val_mask_image',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(
@@ -240,9 +241,9 @@ data = dict(
         ]),
     test=dict(
         type='samsung',
-        data_root='../../data_preprocessing/data/13class_dataset',
-        img_dir='valid_img',
-        ann_dir='valid_img_anno',
+        data_root='/content/drive/My Drive/dacon',
+        img_dir='val_source_image',
+        ann_dir='val_mask_image',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(
@@ -289,7 +290,7 @@ runner = dict(type='IterBasedRunner', max_iters=40000)
 checkpoint_config = dict(by_epoch=False, interval=2000, max_keep_ckpts=1)
 evaluation = dict(
     interval=2000, metric='mIoU', pre_eval=True, save_best='mIoU')
-pretrained = 'pretrained/beit_large_patch16_224_pt22k_ft22k.pth'
-work_dir = './work_dirs/vit_13'
+pretrained = '/content/beit_large_patch16_224_pt22k_ft22k.pth'
+work_dir = '/content/drive/My Drive/dacon/vit_L'
 gpu_ids = range(0, 1)
 auto_resume = False
